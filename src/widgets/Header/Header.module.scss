@@ -1,0 +1,43 @@
+.container {
+  padding: 0px 40px 0px 40px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  min-height: 80px;
+  background-color: gray;
+  .logo {
+    height: 80px;
+    transition: 0.5s;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.8);
+    }
+  }
+  .links {
+    display: flex;
+    gap: 100px;
+    font-size: 30px;
+    .active {
+      font-weight: bold;
+    }
+    .link {
+      position: relative;
+      color: black;
+      text-decoration: none;
+      &::before {
+        position: absolute;
+        bottom: -2px;
+        content: "";
+        border-bottom: 2px solid black;
+        left: 50%;
+        width: 0%;
+        transition: all 0.4s;
+      }
+      &:hover::before {
+        width: 100%;
+        left: 0%;
+      }
+    }
+  }
+}
