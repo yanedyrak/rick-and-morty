@@ -6,3 +6,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+.social {
+  transition: 0.5s;
+  cursor: pointer;
+  &:hover {
+    scale: 1.3;
+  }
+}

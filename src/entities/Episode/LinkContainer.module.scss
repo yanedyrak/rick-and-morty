@@ -1,0 +1,25 @@
+.container {
+  width: 400px;
+  display: flex;
+  background-color: #fbf8f8;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  transition: 0.5s;
+  &:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+  }
+  .title {
+    color: rgb(77, 76, 76);
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 25px;
+  }
+  .description {
+    font-size: 18px;
+    color: gray;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+}

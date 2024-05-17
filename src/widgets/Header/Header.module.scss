@@ -5,13 +5,12 @@
   width: 100%;
   display: flex;
   min-height: 80px;
-  background-color: gray;
   .logo {
-    height: 80px;
+    height: 100px;
     transition: 0.5s;
     &:hover {
       cursor: pointer;
-      filter: brightness(0.8);
+      scale: 1.1;
     }
   }
   .links {
@@ -19,24 +18,33 @@
     gap: 100px;
     font-size: 30px;
     .active {
+      font-size: 37px;
       font-weight: bold;
     }
     .link {
       position: relative;
       color: black;
       text-decoration: none;
-      &::before {
-        position: absolute;
-        bottom: -2px;
-        content: "";
-        border-bottom: 2px solid black;
-        left: 50%;
-        width: 0%;
-        transition: all 0.4s;
+      transition: 0.5s;
+      &:hover {
+        scale: 1.2;
       }
-      &:hover::before {
-        width: 100%;
-        left: 0%;
+    }
+    .burger {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    .links {
+      .link {
+        display: none;
+      }
+      .burger {
+        scale: 1.5;
+        display: flex;
       }
     }
   }
