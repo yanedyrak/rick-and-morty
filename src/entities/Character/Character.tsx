@@ -1,6 +1,6 @@
 import styles from "./Character.module.scss";
 import { CharacterType } from "../../shared/store/slices/pageSlice";
-const Character: React.FC<CharacterType> = ({ id, image, name, gender }) => {
+const Character: React.FC<CharacterType> = ({ image, name, gender }) => {
   return (
     <div className={styles.container}>
       <img className={styles.image} src={image} alt="character" />
