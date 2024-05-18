@@ -2,8 +2,10 @@ import styles from "./App.module.scss";
 import Header from "./widgets/Header/Header";
 import Footer from "./widgets/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
-import MainPage from "./pages/Main/MainPage";
-import CharacterPage from "./pages/Character/CharacterPage";
+import MainPage from "./pages/MainPage/MainPage";
+import CharacterPage from "./pages/CharacterPage/CharacterPage";
+import EpisodesPage from "./pages/EpisodesPage/EpisodesPage";
+import LocationPage from "./pages/LocationPage/LocationPage";
 function App() {
   return (
     <div className={styles.wrapper}>
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/characters" element={<CharacterPage />} />
+        <Route path="/episodes" element={<EpisodesPage />} />
+        <Route path="/locations" element={<LocationPage />} />
       </Routes>
       <Footer />
     </div>

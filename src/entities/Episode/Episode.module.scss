@@ -1,5 +1,6 @@
 .container {
-  width: 400px;
+  margin: 0 auto 0 auto;
+  width: 300px;
   display: flex;
   background-color: #fbf8f8;
   flex-direction: column;
@@ -11,6 +12,7 @@
     filter: brightness(0.8);
   }
   .title {
+    text-align: center;
     color: rgb(77, 76, 76);
     margin-top: 10px;
     margin-bottom: 5px;
@@ -21,5 +23,10 @@
     color: gray;
     margin-top: 10px;
     margin-bottom: 15px;
+  }
+}
+@media (max-width: 400px) {
+  .container {
+    width: 250px;
   }
 }

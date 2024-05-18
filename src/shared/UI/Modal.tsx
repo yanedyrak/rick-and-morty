@@ -3,6 +3,7 @@ import { setModal } from "../store/slices/UI/modalSlice";
 import styles from "./Modal.module.scss";
 import { setCategory } from "../store/slices/UI/categorySlice";
 import { RootState } from "../store/store";
+import { Link } from "react-router-dom";
 
 interface category {
   title: string;
@@ -30,7 +31,8 @@ const Modal: React.FC<ModalProps> = ({ categoryArr }) => {
       </div>
       <div className={styles.burgerLinks}>
         {categoryArr.map((el, index) => (
-          <div
+          <Link
+            to={el.link}
             key={index}
             onClick={() => {
               dispatch(setModal(false));
@@ -39,7 +41,7 @@ const Modal: React.FC<ModalProps> = ({ categoryArr }) => {
             className={styles.link}
           >
             {el.title}
-          </div>
+          </Link>
         ))}
       </div>
     </div>

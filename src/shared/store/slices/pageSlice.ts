@@ -31,6 +31,7 @@ export const fetchItem = createAsyncThunk(
     const { data } = await axios.get(
       `https://rickandmortyapi.com/api/${parameter}?page=${page}&name=${name}`
     );
+
     return data.results as CharacterType[] | EpisodeType[] | LocationType[];
   }
 );
@@ -68,6 +69,7 @@ const pageSlice = createSlice({
         action: PayloadAction<CharacterType[] | EpisodeType[] | LocationType[]>
       ) => {
         state.items = [...state.items, ...action.payload];
+        state.loading = false;
       }
     );
   },

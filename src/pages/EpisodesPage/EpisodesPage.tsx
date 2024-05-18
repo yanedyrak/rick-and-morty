@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import styles from "./CharacterPage.module.scss";
+import styles from "./EpisodesPage.module.scss";
 import { RootState, useAppDispatch } from "../../shared/store/store";
-import Character from "../../entities/Character/Character";
+
 import React from "react";
 import {
   addPage,
@@ -10,9 +10,11 @@ import {
   setLoading,
 } from "../../shared/store/slices/pageSlice";
 import Input from "../../shared/UI/Input/Input";
-const CharacterPage = () => {
+
+import Episode from "../../entities/Episode/Episode";
+const EpisodesPage = () => {
   const dispatch = useAppDispatch();
-  const characters = useSelector((state: RootState) => state.pageSlice);
+  const episodes = useSelector((state: RootState) => state.pageSlice);
 
   const scrollHandler = (e: any) => {
     if (
@@ -31,28 +33,27 @@ const CharacterPage = () => {
     };
   }, []);
   React.useEffect(() => {
-    if (characters.loading) {
+    if (episodes.loading) {
       dispatch(
         fetchItem({
-          page: characters.page,
-          name: characters.name,
-          parameter: "character",
+          page: episodes.page,
+          name: episodes.name,
+          parameter: "episode",
         })
       );
       dispatch(addPage());
     }
-    dispatch(setLoading(false));
-  }, [characters.name, characters.loading]);
+  }, [episodes.name, episodes.loading]);
   return (
     <div className={styles.wrapper}>
       <Input />
       <div className={styles.container}>
-        {characters.items.map((el: any) => (
-          <Character key={el.id} {...el} />
+        {episodes.items.map((el: any) => (
+          <Episode key={el.id} {...el} />
         ))}
       </div>
     </div>
   );
 };
 
-export default CharacterPage;
+export default EpisodesPage;
