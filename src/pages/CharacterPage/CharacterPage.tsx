@@ -1,57 +1,38 @@
-import { useSelector } from "react-redux";
 import styles from "./CharacterPage.module.scss";
-import { RootState, useAppDispatch } from "../../shared/store/store";
-import Character from "../../entities/Character/Character";
-import React from "react";
-import {
-  addPage,
-  clear,
-  fetchItem,
-  setLoading,
-} from "../../shared/store/slices/pageSlice";
-import Input from "../../shared/UI/Input/Input";
-const CharacterPage = () => {
-  const dispatch = useAppDispatch();
-  const characters = useSelector((state: RootState) => state.pageSlice);
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../shared/store/store";
+import { setCategory } from "../../shared/store/slices/UI/categorySlice";
 
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      300
-    ) {
-      dispatch(setLoading(true));
-    }
-  };
-  React.useEffect(() => {
-    document.addEventListener("scroll", scrollHandler);
-    return () => {
-      document.removeEventListener("scroll", scrollHandler);
-      dispatch(clear());
-    };
+export const CharacterPage = () => {
+  const dispatch = useAppDispatch();
+  const id = useParams().id;
+  const [data, setData] = useState({
+    name: "",
+    image: "",
+    gender: "",
+    status: "",
+    species: "",
+  });
+  useEffect(() => {
+    axios.get(`https://rickandmortyapi.com/api/character/${id}`).then((res) => {
+      setData(res.data);
+    });
+    dispatch(setCategory(-1));
   }, []);
-  React.useEffect(() => {
-    if (characters.loading) {
-      dispatch(
-        fetchItem({
-          page: characters.page,
-          name: characters.name,
-          parameter: "character",
-        })
-      );
-      dispatch(addPage());
-    }
-  }, [characters.name, characters.loading]);
   return (
     <div className={styles.wrapper}>
-      <Input />
-      <div className={styles.container}>
-        {characters.items.map((el: any) => (
-          <Character key={el.id} {...el} />
-        ))}
+      <div className={styles.head}>
+        <img className={styles.image} src={data.image} alt="character" />
+        <p className={styles.title}>{data.name}</p>
+      </div>
+
+      <div className={styles.info}>
+        <p className={styles.description}>Gender: {data.gender}</p>
+        <p className={styles.description}>Status: {data.status}</p>
+        <p className={styles.description}>Specie: {data.species}</p>
       </div>
     </div>
   );
 };
-
-export default CharacterPage;

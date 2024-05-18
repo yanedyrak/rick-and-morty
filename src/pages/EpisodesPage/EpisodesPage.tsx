@@ -4,7 +4,6 @@ import { RootState, useAppDispatch } from "../../shared/store/store";
 
 import React from "react";
 import {
-  addPage,
   clear,
   fetchItem,
   setLoading,
@@ -12,6 +11,7 @@ import {
 import Input from "../../shared/UI/Input/Input";
 
 import Episode from "../../entities/Episode/Episode";
+import { Link } from "react-router-dom";
 const EpisodesPage = () => {
   const dispatch = useAppDispatch();
   const episodes = useSelector((state: RootState) => state.pageSlice);
@@ -32,6 +32,7 @@ const EpisodesPage = () => {
       dispatch(clear());
     };
   }, []);
+
   React.useEffect(() => {
     if (episodes.loading) {
       dispatch(
@@ -41,7 +42,6 @@ const EpisodesPage = () => {
           parameter: "episode",
         })
       );
-      dispatch(addPage());
     }
   }, [episodes.name, episodes.loading]);
   return (
@@ -49,7 +49,9 @@ const EpisodesPage = () => {
       <Input />
       <div className={styles.container}>
         {episodes.items.map((el: any) => (
-          <Episode key={el.id} {...el} />
+          <Link to={`/episodes/${el.id}`} key={el.id}>
+            <Episode {...el} />
+          </Link>
         ))}
       </div>
     </div>

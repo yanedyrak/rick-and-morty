@@ -70,6 +70,7 @@ const pageSlice = createSlice({
       ) => {
         state.items = [...state.items, ...action.payload];
         state.loading = false;
+        state.page = state.page + 1;
       }
     );
   },
