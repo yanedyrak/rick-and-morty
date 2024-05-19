@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../shared/store/store";
 import { setCategory } from "../../shared/store/slices/UI/categorySlice";
+import { EpisodeLink } from "../../entities/EpisodeLink/EpisodeLink";
 
 export const CharacterPage = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ export const CharacterPage = () => {
     gender: "",
     status: "",
     species: "",
+    episode: [],
   });
   useEffect(() => {
     axios.get(`https://rickandmortyapi.com/api/character/${id}`).then((res) => {
@@ -32,6 +34,13 @@ export const CharacterPage = () => {
         <p className={styles.description}>Gender: {data.gender}</p>
         <p className={styles.description}>Status: {data.status}</p>
         <p className={styles.description}>Specie: {data.species}</p>
+      </div>
+
+      <div className={styles.episodes}>
+        <p className={styles.description}>Episodes</p>
+        {data.episode.map((url) => (
+          <EpisodeLink key={url} url={url} />
+        ))}
       </div>
     </div>
   );

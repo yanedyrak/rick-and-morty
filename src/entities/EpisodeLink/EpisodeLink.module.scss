@@ -1,0 +1,35 @@
+.link {
+  .container {
+    width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #fbf9fb;
+    transition: 0.5s;
+    margin-bottom: 20px;
+    &:hover {
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .title {
+      font-size: 30px;
+    }
+    .description {
+      margin-top: 20px;
+      font-size: 25px;
+      color: gray;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .link {
+    .container {
+      width: 300px;
+      .title {
+        font-size: 25px;
+      }
+      .description {
+        font-size: 18px;
+      }
+    }
+  }
+}

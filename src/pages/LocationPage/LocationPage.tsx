@@ -1,55 +1,53 @@
-import { useSelector } from "react-redux";
 import styles from "./LocationPage.module.scss";
-import { RootState, useAppDispatch } from "../../shared/store/store";
-import React from "react";
-import {
-  clear,
-  fetchItem,
-  setLoading,
-} from "../../shared/store/slices/pageSlice";
-import Input from "../../shared/UI/Input/Input";
-import Location from "../../entities/Location/Location";
-const LocationPage = () => {
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { CharacterLink } from "../../entities/CharacterLink/CharacterLink";
+import { useAppDispatch } from "../../shared/store/store";
+import { setCategory } from "../../shared/store/slices/UI/categorySlice";
+type LocationType = {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+};
+export const LocationPage = () => {
+  const id = useParams().id;
+  const [locations, setLocations] = useState<LocationType>({
+    id: 0,
+    name: "",
+    type: "",
+    dimension: "",
+    residents: [],
+  });
   const dispatch = useAppDispatch();
-  const locations = useSelector((state: RootState) => state.pageSlice);
-
-  const scrollHandler = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      300
-    ) {
-      dispatch(setLoading(true));
-    }
-  };
-  React.useEffect(() => {
-    document.addEventListener("scroll", scrollHandler);
-    return () => {
-      document.removeEventListener("scroll", scrollHandler);
-      dispatch(clear());
-    };
+  useEffect(() => {
+    axios
+      .get(`https://rickandmortyapi.com/api/location/${id}`)
+      .then((response) => setLocations(response.data));
+    dispatch(setCategory(-1));
   }, []);
-  React.useEffect(() => {
-    if (locations.loading) {
-      dispatch(
-        fetchItem({
-          page: locations.page,
-          name: locations.name,
-          parameter: "location",
-        })
-      );
-    }
-  }, [locations.name, locations.loading]);
   return (
-    <div className={styles.wrapper}>
-      <Input />
-      <div className={styles.container}>
-        {locations.items.map((el: any) => (
-          <Location key={el.id} {...el} />
-        ))}
+    <Link
+      onClick={() => window.scrollTo(0, 0)}
+      className={styles.link}
+      key={locations.id}
+      to={`/locations/${locations.id}`}
+    >
+      <div className={styles.wrapper}>
+        <div className={styles.head}>
+          <h1 className={styles.title}>{locations.name}</h1>
+          <p className={styles.description}>{locations.type}</p>
+          <p className={styles.description}>{locations.dimension}</p>
+        </div>
+
+        <div className={styles.residents}>
+          {locations.residents.map((el: string) => (
+            <CharacterLink key={el} url={el} />
+          ))}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
-
-export default LocationPage;

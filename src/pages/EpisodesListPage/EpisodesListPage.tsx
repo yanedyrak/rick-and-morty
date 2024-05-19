@@ -1,19 +1,21 @@
 import { useSelector } from "react-redux";
-import styles from "./CharacterListPage.module.scss";
+import styles from "./EpisodesListPage.module.scss";
 import { RootState, useAppDispatch } from "../../shared/store/store";
-import Character from "../../entities/Character/Character";
-import React from "react";
 
+import React from "react";
 import {
   clear,
   fetchItem,
   setLoading,
 } from "../../shared/store/slices/pageSlice";
 import Input from "../../shared/UI/Input/Input";
+
+import Episode from "../../entities/Episode/Episode";
 import { Link } from "react-router-dom";
-const CharacterPage = () => {
+
+const EpisodesListPage = () => {
   const dispatch = useAppDispatch();
-  const characters = useSelector((state: RootState) => state.pageSlice);
+  const episodes = useSelector((state: RootState) => state.pageSlice);
 
   const scrollHandler = (e: any) => {
     if (
@@ -31,28 +33,29 @@ const CharacterPage = () => {
       dispatch(clear());
     };
   }, []);
+
   React.useEffect(() => {
-    if (characters.loading) {
+    if (episodes.loading) {
       dispatch(
         fetchItem({
-          page: characters.page,
-          name: characters.name,
-          parameter: "character",
+          page: episodes.page,
+          name: episodes.name,
+          parameter: "episode",
         })
       );
     }
-  }, [characters.name, characters.loading]);
+  }, [episodes.name, episodes.loading]);
   return (
     <div className={styles.wrapper}>
       <Input />
       <div className={styles.container}>
-        {characters.items.map((el: any) => (
+        {episodes.items.map((el: any) => (
           <Link
             onClick={() => window.scrollTo(0, 0)}
+            to={`/episodes/${el.id}`}
             key={el.id}
-            to={`/characters/${el.id}`}
           >
-            <Character {...el} />
+            <Episode {...el} />
           </Link>
         ))}
       </div>
@@ -60,4 +63,4 @@ const CharacterPage = () => {
   );
 };
 
-export default CharacterPage;
+export default EpisodesListPage;

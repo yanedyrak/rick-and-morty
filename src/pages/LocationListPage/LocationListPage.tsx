@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
-import styles from "./EpisodesPage.module.scss";
+import styles from "./LocationListPage.module.scss";
 import { RootState, useAppDispatch } from "../../shared/store/store";
-
 import React from "react";
 import {
   clear,
@@ -9,12 +8,11 @@ import {
   setLoading,
 } from "../../shared/store/slices/pageSlice";
 import Input from "../../shared/UI/Input/Input";
-
-import Episode from "../../entities/Episode/Episode";
+import Location from "../../entities/Location/Location";
 import { Link } from "react-router-dom";
-const EpisodesPage = () => {
+const LocationListPage = () => {
   const dispatch = useAppDispatch();
-  const episodes = useSelector((state: RootState) => state.pageSlice);
+  const locations = useSelector((state: RootState) => state.pageSlice);
 
   const scrollHandler = (e: any) => {
     if (
@@ -32,25 +30,28 @@ const EpisodesPage = () => {
       dispatch(clear());
     };
   }, []);
-
   React.useEffect(() => {
-    if (episodes.loading) {
+    if (locations.loading) {
       dispatch(
         fetchItem({
-          page: episodes.page,
-          name: episodes.name,
-          parameter: "episode",
+          page: locations.page,
+          name: locations.name,
+          parameter: "location",
         })
       );
     }
-  }, [episodes.name, episodes.loading]);
+  }, [locations.name, locations.loading]);
   return (
     <div className={styles.wrapper}>
       <Input />
       <div className={styles.container}>
-        {episodes.items.map((el: any) => (
-          <Link to={`/episodes/${el.id}`} key={el.id}>
-            <Episode {...el} />
+        {locations.items.map((el: any) => (
+          <Link
+            onClick={() => window.scrollTo(0, 0)}
+            key={el.id}
+            to={`/locations/${el.id}`}
+          >
+            <Location {...el} />
           </Link>
         ))}
       </div>
@@ -58,4 +59,4 @@ const EpisodesPage = () => {
   );
 };
 
-export default EpisodesPage;
+export default LocationListPage;

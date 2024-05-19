@@ -15,7 +15,7 @@ export const CharacterLink = (props: { url: string }) => {
     });
   }, []);
   return (
-    <Link to={`/character/${data.id}`}>
+    <Link onClick={() => window.scrollTo(0, 0)} to={`/characters/${data.id}`}>
       <div className={styles.container}>
         <img className={styles.image} src={data.image} alt="character" />{" "}
         <h1 className={styles.title}>{data.name}</h1>
